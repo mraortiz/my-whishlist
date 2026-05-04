@@ -1,0 +1,55 @@
+.album_container {
+    @include album-row-layout;
+    border-bottom: 1px solid $bg-divider;
+    gap: 2px; // Espacio muy ajustado entre líneas
+
+    .cover_container {
+        @include album-row;
+
+        img {
+            width: 100px;
+            height: 100px;
+            background-color: #232326;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+    }
+
+    .album_data {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        gap: 5px;
+        color: $text-white;
+        padding: 10px;
+        width: 80%;
+
+        .info {
+            @include meta-tag;
+            display: flex;
+            gap: 5px;
+            
+            p {
+                color: $accent-lavender;
+            }
+        }
+
+        .album_name {
+            font-size: 18px;
+            font-weight: bold;
+            color: $text-white;
+        }
+        .artist_name {
+            font-size: 16px;
+            color: $text-white;
+        }
+        .release_year {
+            font-size: 14px;
+            color: $text-white;
+        }
+    }
+
+    &:hover {
+        transform: scale(1.009);
+    }
+}

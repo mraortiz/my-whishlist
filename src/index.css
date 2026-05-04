@@ -1,0 +1,108 @@
+/* Importamos la fuente Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Evita el scroll horizontal accidental */
+  background-color: var(--bg-app);
+}
+
+:root {
+  /* Usamos los colores HEX que sacamos de la captura */
+  --bg-app: #0f0f11;
+  --bg-main: #121214;
+  --bg-card: #1a1a1c;
+  --bg-divider: #232326;
+  --text-white: #ffffff;
+  --text-muted: #949499;
+  --accent-lavender: #9099ff;
+
+  /* Tipografía */
+  --font-main: 'Roboto', 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Configuración base: Mobile-First */
+  font-family: var(--font-main);
+  background-color: var(--bg-app);
+  color: var(--text-white);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  width: 100%;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0; /* Eliminamos cualquier padding que haya quedado */
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-main);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: flex-start;
+  min-height: 100vh;
+  background-color: var(--bg-app);
+}
+
+#root {
+  /* Mobile-First: Ocupa todo el ancho por defecto */
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100dvh; /* Dynamic viewport height para móviles */
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-main);
+}
+
+/* --- MEDIA QUERIES PARA DESKTOP --- */
+@media (min-width: 1024px) {
+  #root {
+    /* En pantallas grandes, simulamos el ancho de un móvil o tablet estrecha 
+       para mantener el feeling de la captura de Glide */
+    max-width: 450px; 
+    border-inline: 1px solid var(--bg-divider);
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+  }
+}
+
+/* --- RESET DE ELEMENTOS --- */
+h1, h2, h3, p {
+  margin: 0;
+}
+
+/* Estilo para los títulos principales (como "Wish You Were Here" en la captura) */
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  padding: 20px 16px 10px 16px;
+  color: var(--text-white);
+}
+
+/* Estilo para los nombres de álbumes en las listas */
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}

@@ -1,0 +1,93 @@
+// Estilo base para ambos botones (puedes usar un mixin)
+.add, .filter, .submit, .cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.1s ease; // Transición rápida para que sea reactivo
+
+    // ESTO CORRIGE TUS ICONOS:
+    // Selecciona cualquier SVG (icono de Lucide) dentro del botón
+    svg {
+        stroke-width: 2.5px; 
+        transition: transform 0.2s;
+    }
+
+    // Selecciona el texto dentro del botón
+    span {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    &:active {
+        // Feedback visual: se encoge un poquito y se oscurece apenas
+        transform: scale(0.95); 
+        filter: brightness(0.8);
+    }
+}
+
+// Estilos específicos para ADD
+.add {
+    background-color: $accent-btn;
+    color: white; // Esto pintará tanto el texto como el icono (SVG)
+    padding: 6px 12px;
+    border-radius: 15px;
+
+    &:hover svg {
+        transform: scale(1.1);
+    }
+}
+
+// Estilos específicos para FILTER
+.filter {
+    background-color: $bg-card;
+    color: $text-white; // El icono tomará este color automáticamente
+    width: 36px;
+    height: 36px;
+    padding: 0; // Para que sea un cuadrado perfecto
+    border-radius: 5px;
+}
+
+.submit, .cancel {
+    color: $text-white; // El icono tomará este color automáticamente
+    width: 150px;
+    height: 36px;
+    padding: 0; // Para que sea un cuadrado perfecto
+    border-radius: 5px;
+}
+
+.submit {
+    background-color: $accept;
+}
+
+.cancel {
+    background-color: $cancel;
+}
+
+.pill {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: $text-white; // Fondo claro para que el texto se vea bien
+    color: $bg-main;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    span {
+        white-space: nowrap;
+    }
+
+    &.selected {
+        background-color: $accent-lavender;
+        color: #fff;
+        border-color: $accent-lavender;
+    }
+
+    &.selected {
+        transform: scale(0.95);
+    }
+}

@@ -1,0 +1,43 @@
+.app_wrapper {
+  position: relative;
+  min-height: 100vh;
+  background-color: $bg-app; // Tu color de fondo
+  overflow-x: hidden;
+}
+
+.overlay {
+  position: fixed;
+  top: 160px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000; // Fondo sólido para tapar la lista
+  z-index: 999;
+  height: calc(100vh - 160px);
+  border-radius: 20px 20px 0px 0px;
+  border: 1px solid white;
+  width: 100%;
+
+  // --- LA MAGIA ESTÁ ACÁ ---
+  display: flex;
+  flex-direction: column; // Los elementos van hacia abajo
+  align-items: center;    // Centra el form horizontalmente
+  justify-content: flex-start; // Lo pega arriba, PERO ahora podemos darle un padding
+  
+  padding: 30px 20px; // 30px de aire arriba para que no toque el Header
+  overflow-y: auto;   // Si el form es largo, permite scrollear
+
+  @keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+  animation: slideUp 0.3s ease-out; // Aplica la animación al aparecer
+}
+

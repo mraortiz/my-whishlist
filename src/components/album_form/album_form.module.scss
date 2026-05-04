@@ -1,0 +1,56 @@
+.form {
+  width: 100%;
+  max-width: 500px; // Para que en PC no se vea gigante, pero en celular ocupe todo
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; // Espacio entre inputs
+  justify-content: space-evenly;
+  background-color: #1a1a1c; // El gris de tus cards
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1); // Un borde sutil para que despegue del fondo negro
+
+    .input_group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        label {
+            color: $accent-lavender; // El lavanda para las etiquetas
+            font-size: 14px;
+            font-weight: 600;
+            margin-left: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input {
+            background-color: #FFFFFF; // Un gris un pelín más claro que el fondo
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: #000;
+            font-size: 16px;
+            transition: all 0.2s ease;
+
+            &::placeholder {
+                color: #636366;
+            }
+
+            &:focus {
+                outline: none;
+                border-color: $accent-lavender;
+                background-color: #FFFFFF;
+                box-shadow: 0 0 0 4px rgba($accent-lavender, 0.1);
+            }
+        }
+    }
+
+    .button_container {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-evenly;
+
+    }
+}

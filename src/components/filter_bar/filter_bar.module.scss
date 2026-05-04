@@ -1,0 +1,43 @@
+.filter_wrapper {
+    width: 100%;
+    overflow: hidden;
+    background-color: $bg-card; // Un tono apenas distinto para que se note la sección
+    margin-top: 10px;
+    border-radius: 5px;
+    animation: slideDown 0.3s ease-out;
+}
+
+.scroll_container {
+    display: flex;
+    gap: 12px;
+    padding: 12px 20px;
+    overflow-x: auto;
+    
+    &::-webkit-scrollbar { display: none; }
+}
+
+@keyframes slideDown {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+    to {
+        height: 50px; // Ajusta según el alto de tus botones
+        opacity: 1;
+    }
+}
+
+.filter_scroll {
+    display: flex;
+    gap: 10px;
+    padding: 10px 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch; // Scroll fluido en iOS
+    
+    // Escondemos la barra de scroll para que se vea más limpio
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+

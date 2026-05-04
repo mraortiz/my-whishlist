@@ -1,0 +1,150 @@
+@use "variables" as *;
+
+// Contenedor de la barra de búsqueda
+@mixin search-container {
+  background-color: $bg-card;
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+  input {
+    background: transparent;
+    border: none;
+    color: $text-white;
+    font-family: $font-main;
+    font-size: 15px;
+    outline: none;
+    width: 100%;
+
+    &::placeholder {
+      color: $text-muted;
+    }
+  }
+}
+
+// Estilo de cada fila de la lista
+@mixin album-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// Etiquetas pequeñas (Género • Año)
+@mixin meta-tag {
+  color: $accent-lavender;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+@mixin album-row-layout {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between; // Para empujar la flecha al final
+  padding: 14px 0;
+  border-bottom: 1px solid $bg-divider;
+  cursor: pointer;
+
+  .cover_container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .image {
+      width: 48px;
+      height: 48px;
+      border-radius: 6px;
+      object-fit: cover;
+      background-color: $bg-card; // Por si no hay imagen
+    }
+
+    .album_container {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      .tag_container {
+        color: $accent-lavender;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 2px;
+      }
+
+      .album_name {
+        color: $text-white;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+
+      .artist_name {
+        color: $text-muted;
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+  }
+
+  // Si decides poner la flecha chevron afuera del cover-container
+  .chevron {
+    color: $text-muted;
+    opacity: 0.5;
+  }
+
+  &:hover {
+    background-color: rgba($bg-divider, 0.4);
+  }
+}
+
+@mixin sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: $bg-main;
+  border-bottom: 1px solid $bg-divider;
+}
+
+@mixin p-y {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+@mixin p-x {
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+}
+
+// Unificamos en un mixin para no repetir código
+@mixin base-button {
+    display: inline-flex; // Mejor que flex para botones pequeños
+    align-items: center;
+    justify-content: center;
+    height: 32px;        // Altura fija para que coincidan siempre
+    padding: 0 12px;     // Padding lateral parejo
+    gap: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    transition: filter 0.2s;
+
+    &:hover {
+        filter: brightness(1.2);
+    }
+    
+    // Forzamos a que cualquier svg (icono) adentro mida lo mismo
+    svg {
+        display: block;
+        flex-shrink: 0; 
+    }
+}
