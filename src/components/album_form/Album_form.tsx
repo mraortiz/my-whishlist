@@ -17,7 +17,7 @@ const Album_form = () => {
 
     const [file, setFile] = useState<File | null>(null);
 
-    const { setAlbums, setLoading, albums } = useUi();
+    const { setLoading } = useUi();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,13 +43,6 @@ const Album_form = () => {
             .select(); // IMPORTANTE: Agregamos .select() para que nos devuelva el objeto creado
 
         if (!error && data) {
-            // Aquí llamás a la función que actualiza tu lista localmente
-            // data[0] contiene el nuevo álbum con el ID que le puso Supabase
-            setAlbums([data[0], ...albums]);
-
-            // O si usas un context:
-            // updateAlbums(data[0]);
-
             alert("¡Disco guardado!");
         }
 
