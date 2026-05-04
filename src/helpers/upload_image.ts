@@ -8,7 +8,7 @@ export const uploadAlbumImage = async (file: File) => {
     const filePath = `${fileName}`;
 
     // 2. Subimos el archivo al bucket 'album-covers'
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from('album-covers')
       .upload(filePath, file);
 
