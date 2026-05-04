@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './App_name.module.scss'
 import Button from '../button/Button'
 

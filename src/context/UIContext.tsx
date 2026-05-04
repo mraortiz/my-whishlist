@@ -34,6 +34,8 @@ export const UiProvider = ({ children }: UiProviderProps) => {
     const toggleForm = () => setIsFormOpen(prev => !prev);
     const toggleFilterBar = () => setIsFilterBarOpen(prev => !prev);
 
+    console.log(loading)
+
     useEffect(() => {
         const fetchAlbums = async () => {
             const { data, error } = await supabase

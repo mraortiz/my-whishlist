@@ -1,4 +1,3 @@
-import React from 'react'
 import Header from './components/header/Header'
 import List from './components/list/List'
 import Album_form from './components/album_form/Album_form'

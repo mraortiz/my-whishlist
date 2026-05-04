@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './album.module.scss'
 import ace_of_spades from '../../assets/ace_of_spades.jpg'
 import { type AlbumProps } from '../../types'
