@@ -14,7 +14,8 @@ interface UiContextType {
     setIsFilterBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
     toggleFilterBar: () => void;
     genres: string[];
-
+    loading: boolean;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const UiContext = createContext<UiContextType | undefined>(undefined);
@@ -85,7 +86,9 @@ export const UiProvider = ({ children }: UiProviderProps) => {
             isFilterBarOpen,
             setIsFilterBarOpen,
             toggleFilterBar,
-            genres
+            genres,
+            loading,
+            setLoading
         }}>
             {children}
         </UiContext.Provider>
