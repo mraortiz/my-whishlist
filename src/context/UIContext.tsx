@@ -54,6 +54,24 @@ export const UiProvider = ({ children }: UiProviderProps) => {
         };
 
         fetchAlbums();
+
+        // 2. Suscripción en tiempo real
+        const channel = supabase
+            .channel('cambios-en-discos') // un nombre cualquiera para el canal
+            .on(
+                'postgres_changes',
+                { event: 'INSERT', schema: 'public', table: 'albums' },
+                (payload) => {
+                    // payload.new tiene el disco que acabas de agregar desde el otro dispositivo
+                    setAlbums((currentAlbums) => [payload.new as AlbumProps, ...currentAlbums]);
+                }
+            )
+            .subscribe();
+
+        // 3. Limpieza al desmontar el componente
+        return () => {
+            supabase.removeChannel(channel);
+        };
     }, []);
 
 
