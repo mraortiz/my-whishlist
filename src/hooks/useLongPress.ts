@@ -1,23 +1,27 @@
-import { useState, useRef, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 
 interface UseLongPressOptions {
-  threshold?: number;
   onLongPress: () => void;
-  onClick?: () => void;
+  threshold?: number;
 }
 
 export const useLongPress = ({ 
-  threshold = 600, 
   onLongPress, 
-  onClick 
+  threshold = 600 
 }: UseLongPressOptions) => {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [isLongPressActive, setIsLongPressActive] = useState(false);
+  const isTargetTouched = useRef(false); // <--- Bloqueador de eventos duplicados
 
-  const start = useCallback(() => {
+  const start = useCallback((event: React.MouseEvent | React.TouchEvent) => {
+    // Si es un evento de mouse pero ya se detectó touch, ignoramos
+    if (isTargetTouched.current && event.type === 'mousedown') return;
+    
+    if (event.type === 'touchstart') {
+      isTargetTouched.current = true;
+    }
+
     timerRef.current = setTimeout(() => {
       onLongPress();
-      setIsLongPressActive(true);
       if (navigator.vibrate) navigator.vibrate(50);
     }, threshold);
   }, [onLongPress, threshold]);
@@ -25,15 +29,13 @@ export const useLongPress = ({
   const stop = useCallback(() => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
+      timerRef.current = null;
     }
-    
-    // Si soltamos antes del threshold, podríamos disparar un click normal
-    if (!isLongPressActive && onClick) {
-      // onClick(); // Opcional: activar si querés manejar clicks normales aquí
-    }
-    
-    setIsLongPressActive(false);
-  }, [isLongPressActive, onClick]);
+    // Reseteamos el flag de touch después de un breve delay
+    setTimeout(() => {
+      isTargetTouched.current = false;
+    }, 100);
+  }, []);
 
   return {
     onMouseDown: start,
