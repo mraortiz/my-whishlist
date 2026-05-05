@@ -5,7 +5,6 @@ import { supabase } from '../../lib/supabase';
 import OwnershipBadge from '../ownership_badge/Ownership_badge';
 import { useEffect, useState } from 'react';
 import { useUi } from '../../context/useUI';
-import { useLongPress } from '../../hooks/useLongPress';
 
 
 
@@ -15,10 +14,11 @@ const Album = ({ cover, genre, price, title, artist, owned, id }: AlbumProps) =>
 
     const [isExiting, setIsExiting] = useState(false);
 
-    const longPressEvents = useLongPress({
-        onLongPress: () => setIsEditMode(true),
-        threshold: 600, // ms
-    });
+    const handleContextMenu = (e: React.MouseEvent | React.TouchEvent) => {
+        e.preventDefault(); // Evita que aparezca el menú feo del navegador
+        setIsEditMode(true);
+        if (navigator.vibrate) navigator.vibrate(50);
+    };
 
     useEffect(() => {
         if (isEditMode) {
@@ -50,7 +50,7 @@ const Album = ({ cover, genre, price, title, artist, owned, id }: AlbumProps) =>
     };
 
     return (
-        <div className={styles.album_container} {...longPressEvents}>
+        <div className={styles.album_container} onContextMenu={handleContextMenu} onTouchStart={handleContextMenu}>
             <div className={styles.cover_container}>
                 <img src={cover || ace_of_spades} alt="album cover" className={styles.album_cover} />
             </div>
