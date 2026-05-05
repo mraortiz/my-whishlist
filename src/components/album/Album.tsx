@@ -3,7 +3,7 @@ import ace_of_spades from '../../assets/ace_of_spades.jpg'
 import { type AlbumProps } from '../../types'
 import { supabase } from '../../lib/supabase';
 import OwnershipBadge from '../ownership_badge/Ownership_badge';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUi } from '../../context/useUI';
 import { useLongPress } from '../../hooks/useLongPress';
 
@@ -11,14 +11,20 @@ import { useLongPress } from '../../hooks/useLongPress';
 
 const Album = ({ cover, genre, price, title, artist, owned, id }: AlbumProps) => {
 
-    const { setAlbums, setIsEditMode } = useUi();
+    const { setAlbums, setIsEditMode, isEditMode } = useUi();
 
     const [isExiting, setIsExiting] = useState(false);
 
     const longPressEvents = useLongPress({
         onLongPress: () => setIsEditMode(true),
-        threshold: 600 // ms
+        threshold: 600, // ms
     });
+
+    useEffect(() => {
+        if (isEditMode) {
+            alert("Edit mode activated! Ahora podrías mostrar opciones para editar o eliminar este álbum.");
+        }
+    }, [isEditMode]);
 
     const handleToggle = async () => {
         // 1. Iniciamos la animación de salida local
