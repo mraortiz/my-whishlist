@@ -13,6 +13,8 @@ const Album = ({ cover, genre, price, title, artist, owned, id }: AlbumProps) =>
     const { setAlbums, setIsEditMode, isEditMode } = useUi();
     const [isExiting, setIsExiting] = useState(false);
 
+    console.log("edit mode on?", isEditMode);
+
     const handleContextMenu = (e: React.MouseEvent | React.TouchEvent) => {
         e.preventDefault(); // Evita que aparezca el menú feo del navegador
         setIsEditMode(true);
