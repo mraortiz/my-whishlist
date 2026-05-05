@@ -1,16 +1,15 @@
-import styles from './album.module.scss'
-import ace_of_spades from '../../assets/ace_of_spades.jpg'
-import { type AlbumProps } from '../../types'
+import { useState } from 'react';
 import { supabase } from '../../lib/supabase';
-import OwnershipBadge from '../ownership_badge/Ownership_badge';
-import { useEffect, useState } from 'react';
 import { useUi } from '../../context/useUI';
+import styles from './album.module.scss'
+import OwnershipBadge from '../ownership_badge/Ownership_badge';
+import { type AlbumProps } from '../../types'
 
 
 
 const Album = ({ cover, genre, price, title, artist, owned, id }: AlbumProps) => {
 
-    const { setAlbums, setIsEditMode, isEditMode } = useUi();
+    const { setAlbums, setIsEditMode } = useUi();
 
     const [isExiting, setIsExiting] = useState(false);
 
@@ -19,12 +18,6 @@ const Album = ({ cover, genre, price, title, artist, owned, id }: AlbumProps) =>
         setIsEditMode(true);
         if (navigator.vibrate) navigator.vibrate(50);
     };
-
-    useEffect(() => {
-        if (isEditMode) {
-            alert("Edit mode activated! Ahora podrías mostrar opciones para editar o eliminar este álbum.");
-        }
-    }, [isEditMode]);
 
     const handleToggle = async () => {
         // 1. Iniciamos la animación de salida local
@@ -52,7 +45,7 @@ const Album = ({ cover, genre, price, title, artist, owned, id }: AlbumProps) =>
     return (
         <div className={styles.album_container} onContextMenu={handleContextMenu} onTouchStart={handleContextMenu}>
             <div className={styles.cover_container}>
-                <img src={cover || ace_of_spades} alt="album cover" className={styles.album_cover} />
+                <img src={cover} alt="album cover" className={styles.album_cover} />
             </div>
             <div className={styles.album_data}>
                 <div className={styles.info}>
