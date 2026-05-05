@@ -4,7 +4,8 @@ export type AlbumProps = {
     genre: string,
     price: number,
     title: string,
-    artist: string
+    artist: string,
+    owned: boolean
 }
 
-export type ButtonMode = 'add' | 'filter' | 'submit' | 'cancel' | 'pill';
+export type ButtonMode = 'menu' | 'add' | 'filter' | 'submit' | 'cancel' | 'pill';

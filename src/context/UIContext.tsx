@@ -16,6 +16,11 @@ interface UiContextType {
     genres: string[];
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+    listToRender: string;
+    setListToRender: React.Dispatch<React.SetStateAction<string>>;
+    isEditMode: boolean;
+    exitEditMode: () => void;
+    setIsEditMode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const UiContext = createContext<UiContextType | undefined>(undefined);
@@ -25,17 +30,20 @@ interface UiProviderProps {
 }
 
 export const UiProvider = ({ children }: UiProviderProps) => {
+
+    const [isEditMode, setIsEditMode] = useState(false);
     const [isFormOpen, setIsFormOpen] = useState(false);
+    const [isFilterBarOpen, setIsFilterBarOpen] = useState(false);
     const [albums, setAlbums] = useState<AlbumProps[]>([]);
     const [selectedGenre, setSelectedGenre] = useState("All");
-    const [isFilterBarOpen, setIsFilterBarOpen] = useState(false);
     const [genres, setGenres] = useState<string[]>([]);
     const [loading, setLoading] = useState(false);
+    const [listToRender, setListToRender] = useState("my whishlist");
 
     const toggleForm = () => setIsFormOpen(prev => !prev);
     const toggleFilterBar = () => setIsFilterBarOpen(prev => !prev);
+    const exitEditMode = () => setIsEditMode(false);
 
-    console.log(loading)
 
     useEffect(() => {
         const fetchAlbums = async () => {
@@ -54,21 +62,36 @@ export const UiProvider = ({ children }: UiProviderProps) => {
         };
 
         fetchAlbums();
+    }, []);
 
-        // 2. Suscripción en tiempo real
+    useEffect(() => {
         const channel = supabase
-            .channel('cambios-en-discos') // un nombre cualquiera para el canal
+            .channel('cambios-en-discos')
             .on(
                 'postgres_changes',
-                { event: 'INSERT', schema: 'public', table: 'albums' },
+                { event: '*', schema: 'public', table: 'albums' },
                 (payload) => {
-                    // payload.new tiene el disco que acabas de agregar desde el otro dispositivo
-                    setAlbums((currentAlbums) => [payload.new as AlbumProps, ...currentAlbums]);
+
+                    if (payload.eventType === 'INSERT') {
+                        setAlbums((prev) => [payload.new as AlbumProps, ...prev]);
+                    }
+
+                    if (payload.eventType === 'UPDATE') {
+                        setAlbums((prev) =>
+                            prev.map((album) =>
+                                // Si es el disco que cambió, lo reemplazamos con la nueva info (payload.new)
+                                album.id === payload.new.id ? (payload.new as AlbumProps) : album
+                            )
+                        );
+                    }
+
+                    if (payload.eventType === 'DELETE') {
+                        setAlbums((prev) => prev.filter((album) => album.id !== payload.old.id));
+                    }
                 }
             )
             .subscribe();
 
-        // 3. Limpieza al desmontar el componente
         return () => {
             supabase.removeChannel(channel);
         };
@@ -106,7 +129,12 @@ export const UiProvider = ({ children }: UiProviderProps) => {
             toggleFilterBar,
             genres,
             loading,
-            setLoading
+            setLoading,
+            listToRender,
+            setListToRender,
+            isEditMode,
+            exitEditMode,
+            setIsEditMode,
         }}>
             {children}
         </UiContext.Provider>

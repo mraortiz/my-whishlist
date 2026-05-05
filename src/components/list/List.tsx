@@ -5,11 +5,20 @@ import { useUi } from '../../context/useUI';
 
 
 const List = () => {
-    const { albums } = useUi(); // Traemos los discos del contexto
+    const { albums, listToRender } = useUi(); // Traemos los discos del contexto
+
+    const renderAlbums = albums.filter(album => {
+        if (listToRender === "my whishlist") {
+            return album.owned === false; // Filtra solo los discos que están en la wishlist
+        } else {
+            return album.owned === true; // Filtra solo los discos que no están en la wishlist (colección)
+        }
+    });
+
 
     return (
         <ul>
-            {albums?.map((album: JSX.IntrinsicAttributes & AlbumProps) => (
+            {renderAlbums?.map((album: JSX.IntrinsicAttributes & AlbumProps) => (
                 <li key={album.id}>
                     <Album {...album} />
                 </li>

@@ -1,12 +1,50 @@
 import styles from './album.module.scss'
 import ace_of_spades from '../../assets/ace_of_spades.jpg'
 import { type AlbumProps } from '../../types'
+import { supabase } from '../../lib/supabase';
+import OwnershipBadge from '../ownership_badge/Ownership_badge';
+import { useState } from 'react';
+import { useUi } from '../../context/useUI';
+import { useLongPress } from '../../hooks/useLongPress';
 
 
 
-const Album = ({ cover, genre, price, title, artist }: AlbumProps) => {
+const Album = ({ cover, genre, price, title, artist, owned, id }: AlbumProps) => {
+
+    const { setAlbums, setIsEditMode } = useUi();
+
+    const [isExiting, setIsExiting] = useState(false);
+
+    const longPressEvents = useLongPress({
+        onLongPress: () => setIsEditMode(true),
+        threshold: 600 // ms
+    });
+
+    const handleToggle = async () => {
+        // 1. Iniciamos la animación de salida local
+        setIsExiting(true);
+
+        // 2. Esperamos a que la animación termine (ej. 400ms) antes de actualizar la DB y el estado global
+        setTimeout(async () => {
+            const nextStatus = !owned;
+
+            const { error } = await supabase
+                .from('albums')
+                .update({ owned: nextStatus })
+                .eq('id', id);
+
+            if (!error) {
+                setAlbums(prev =>
+                    prev.map(a => a.id === id ? { ...a, owned: nextStatus } : a)
+                );
+            }
+            // Resetear el estado de salida por si volvemos a ver esta card
+            setIsExiting(false);
+        }, 400);
+    };
+
     return (
-        <div className={styles.album_container}>
+        <div className={styles.album_container} {...longPressEvents}>
             <div className={styles.cover_container}>
                 <img src={cover || ace_of_spades} alt="album cover" className={styles.album_cover} />
             </div>
@@ -18,6 +56,12 @@ const Album = ({ cover, genre, price, title, artist }: AlbumProps) => {
                 </div>
                 <span className={styles.album_name}>{title}</span>
                 <span className={styles.artist_name}>{artist}</span>
+            </div>
+            <div className={`${styles.card} ${isExiting ? styles.fadeOut : ''}`}>
+                {/* ... info del album ... */}
+                <div className={styles.footer}>
+                    <OwnershipBadge owned={owned} onClick={handleToggle} />
+                </div>
             </div>
         </div>
     )

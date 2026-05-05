@@ -8,16 +8,16 @@ import { supabase } from '../../lib/supabase';
 
 const Album_form = () => {
     const [formData, setFormData] = useState({
-        title: '',
-        artist: '',
-        genre: '',
+        title: ''.toLowerCase(),
+        artist: ''.toLowerCase(),
+        genre: ''.toLowerCase(),
         price: '',
         cover: 'https://placehold.co/300x300/1a1a1c/949499?text=New+Vinyl' // Placeholder por defecto
     });
 
     const [file, setFile] = useState<File | null>(null);
 
-    const { setLoading } = useUi();
+    const { setLoading, toggleForm } = useUi();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -48,6 +48,7 @@ const Album_form = () => {
 
 
         setLoading(false);
+        toggleForm();
     };
 
     return (

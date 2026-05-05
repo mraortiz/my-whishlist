@@ -5,14 +5,15 @@ import styles from './filter_bar.module.scss';
 const Filter_bar = () => {
     const { isFilterBarOpen, genres, selectedGenre } = useUi();
 
-    // Si no está abierto, no renderizamos nada (o manejamos la animación con clases)
     if (!isFilterBarOpen) return null;
 
-    const genresList = ["All", ...new Set(genres.map(genre => genre))]; // Aseguramos que "All" esté al principio y eliminamos duplicados
+    const genresList = ["All", ...new Set(genres.map(genre => genre))];
 
     const isSelected = (genre: string) => {
-        return selectedGenre === genre;
+        return selectedGenre.toLowerCase() === genre.toLowerCase();
     };
+
+    console.log(genresList, "genresList");
 
     return (
         <div className={styles.filter_wrapper}>

@@ -1,4 +1,4 @@
-import { Plus, ListFilter, Check, X } from 'lucide-react';
+import { Plus, ListFilter, Check, X, Menu } from 'lucide-react';
 import styles from './button.module.scss';
 import { useUi } from '../../context/useUI';
 import type { ButtonMode } from '../../types';
@@ -35,6 +35,12 @@ const Button = ({ mode, genre, isSelected }: ButtonProps) => {
     };
 
     const buttonConfig: Record<ButtonMode, ButtonConfig> = {
+        menu: {
+            icon: <Menu size={18} />,
+            text: null,
+            className: styles.menu,
+            disabled: isFormOpen, // Deshabilita el botón "Menu" si el formulario ya está abierto
+        },
         add: {
             icon: <Plus size={18} />,
             text: "Add",
