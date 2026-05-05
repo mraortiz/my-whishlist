@@ -4,13 +4,13 @@ import { useUi } from '../../context/useUI';
 import styles from './album.module.scss'
 import OwnershipBadge from '../ownership_badge/Ownership_badge';
 import { type AlbumProps } from '../../types'
+import Edit_menu from '../../edit_menu/Edit_menu';
 
 
 
 const Album = ({ cover, genre, price, title, artist, owned, id }: AlbumProps) => {
 
-    const { setAlbums, setIsEditMode } = useUi();
-
+    const { setAlbums, setIsEditMode, isEditMode } = useUi();
     const [isExiting, setIsExiting] = useState(false);
 
     const handleContextMenu = (e: React.MouseEvent | React.TouchEvent) => {
@@ -47,21 +47,25 @@ const Album = ({ cover, genre, price, title, artist, owned, id }: AlbumProps) =>
             <div className={styles.cover_container}>
                 <img src={cover} alt="album cover" className={styles.album_cover} />
             </div>
-            <div className={styles.album_data}>
-                <div className={styles.info}>
-                    <span className={styles.tags}>{genre}</span>
-                    <span className={styles.dot}>•</span>
-                    <span className={styles.price}>u$d {price}</span>
-                </div>
-                <span className={styles.album_name}>{title}</span>
-                <span className={styles.artist_name}>{artist}</span>
-            </div>
-            <div className={`${styles.card} ${isExiting ? styles.fadeOut : ''}`}>
-                {/* ... info del album ... */}
-                <div className={styles.footer}>
-                    <OwnershipBadge owned={owned} onClick={handleToggle} />
-                </div>
-            </div>
+            {isEditMode ? <Edit_menu /> : (
+                <>
+                    <div className={styles.album_data}>
+                        <div className={styles.info}>
+                            <span className={styles.tags}>{genre}</span>
+                            <span className={styles.dot}>•</span>
+                            <span className={styles.price}>u$d {price}</span>
+                        </div>
+                        <span className={styles.album_name}>{title}</span>
+                        <span className={styles.artist_name}>{artist}</span>
+                    </div>
+                    <div className={`${styles.card} ${isExiting ? styles.fadeOut : ''}`}>
+                        {/* ... info del album ... */}
+                        <div className={styles.footer}>
+                            <OwnershipBadge owned={owned} onClick={handleToggle} />
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     )
 }
