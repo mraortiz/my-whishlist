@@ -9,7 +9,7 @@
   top: -60px; // AJUSTE CLAVE: Poné acá la altura exacta de tu h1 (appName)
   z-index: 100;
   box-shadow: 0 4px 20px rgba(123, 122, 122, 0.779);
-  border: 1px solid $text-dim;
+  border-bottom: 1px solid $text-dim;
   border-radius: 0px 0px 10px 10px;
 
   .app_name {
