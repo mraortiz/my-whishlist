@@ -38,7 +38,7 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 
   width: 100%;
-  min-height: 100dvh;
+  min-height: 100vh;
   margin: 0;
   padding: 0; /* Eliminamos cualquier padding que haya quedado */
   display: flex;

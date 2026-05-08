@@ -1,0 +1,18 @@
+.list_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px 0;
+
+    li {
+        width: 100%;
+    }
+
+    .list_footer {
+        height: 8vh;
+        width: 100%;
+    }
+}

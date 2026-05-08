@@ -1,8 +1,11 @@
+import { useUi } from '../../context/useUI';
 import Button from '../button/Button'
 import styles from './Search_bar.module.scss'
 import { Search } from 'lucide-react'
 
 const Search_bar = () => {
+
+    const { toggleFilterBar } = useUi();
 
 
     return (
@@ -15,7 +18,7 @@ const Search_bar = () => {
                     className={styles.input}
                 />
             </div>
-            <Button mode="filter" />
+            <Button mode="filter" onClick={toggleFilterBar} />
         </div>
     )
 }

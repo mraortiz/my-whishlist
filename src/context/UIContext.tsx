@@ -21,6 +21,10 @@ interface UiContextType {
     isEditMode: boolean;
     exitEditMode: () => void;
     setIsEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+    editingAlbum: AlbumProps | null;
+    setEditingAlbum: React.Dispatch<React.SetStateAction<AlbumProps | null>>;
+    currentView: 'home' | 'collection' | 'add' | 'edit';
+    setCurrentView: React.Dispatch<React.SetStateAction<'home' | 'collection' | 'add' | 'edit'>>;
 }
 
 const UiContext = createContext<UiContextType | undefined>(undefined);
@@ -39,6 +43,8 @@ export const UiProvider = ({ children }: UiProviderProps) => {
     const [genres, setGenres] = useState<string[]>([]);
     const [loading, setLoading] = useState(false);
     const [listToRender, setListToRender] = useState("my whishlist");
+    const [editingAlbum, setEditingAlbum] = useState<AlbumProps | null>(null);
+    const [currentView, setCurrentView] = useState<'home' | 'collection' | 'add' | 'edit'>('home');
 
     const toggleForm = () => setIsFormOpen(prev => !prev);
     const toggleFilterBar = () => setIsFilterBarOpen(prev => !prev);
@@ -135,6 +141,10 @@ export const UiProvider = ({ children }: UiProviderProps) => {
             isEditMode,
             exitEditMode,
             setIsEditMode,
+            editingAlbum,
+            setEditingAlbum,
+            currentView,
+            setCurrentView,
         }}>
             {children}
         </UiContext.Provider>
